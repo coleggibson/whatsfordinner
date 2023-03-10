@@ -9,9 +9,6 @@ const Content = () => {
     
     let orderNum = 2
     const [ingredients, setIngredients] = useState ([
-        {name: 'Apple', id:uniqid()},
-        {name: 'Orange', id:uniqid()},
-        {name: 'Chicken', id:uniqid()}
     ]);
 
     const [recipes, setRecipes] = useState([
@@ -38,8 +35,7 @@ const Content = () => {
         ingredients.push(ingredientObject)
         setIngredients([...ingredients])
         combineIngredients(ingredients)
-        value = ''
-        
+        document.getElementById('name').value = ''
         }
     }
 
@@ -90,12 +86,19 @@ const Content = () => {
         setIngredients([...ingredients])
     }
 
+    const deleteAllIngredients = (ingredients) => {
+        setIngredients([])
+    }
+
     return (
         <div id="content-container">
             <div id='search-content'>
-                <input id='name' type='text' defaultValue='' placeholder='Add ingredient'/>
+                <input id='name' type='text' defaultValue='' placeholder='Search for ingredient'/>
                 <br/>
-                <input id='submit-button' type='button' value='Submit' onClick={() => addIngredient(document.getElementById('name').value)}/>
+                <div id='button-container'>
+                <input id='submit-button' type='button' value='Add' onClick={() => addIngredient(document.getElementById('name').value)}/>
+                <input id='submit-button' type='button' value='Delete All' onClick={() => deleteAllIngredients(ingredients)}/>
+                </div>
                 <div id='ingredient-list'>
                     {ingredients.map((ingredient) => {
                         return (<div key={ingredient.id} 
@@ -110,7 +113,6 @@ const Content = () => {
             </div>
             
             <div id='recipe-results'>
-            <div id='results-title'>Results</div>
                     {recipes.map((recipe) => {
                         return (<div key={recipe.id} 
                                 className='recipe-container'>
