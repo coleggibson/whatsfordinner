@@ -41,6 +41,8 @@ const Content = () => {
 
     const addIngredient = (ingredient) => {
         let ingredientObject = {}
+
+        
         ingredientObject.name = ingredient
         ingredientObject.id = uniqid()
         ingredients.push(ingredientObject)
@@ -52,17 +54,19 @@ const Content = () => {
     combineIngredients(ingredients)
     return (
         <div id="content-container">
-            <input id='name' type='text' defaultValue='' placeholder='Add ingredient'/>
-            <br/>
-            <input type='button' value='Submit' onClick={() => addIngredient(document.getElementById('name').value)}/>
-            <div id='ingredient-list'>
-                {ingredients.map((ingredient) => {
-                    return (<div key={ingredient.id} 
-                            className='ingredient-container'>
-                            <div className='ingredient-name'>{ingredient.name}</div>
-                       </div>
-                    )
-                })}
+            <div id='search-content'>
+                <input id='name' type='text' defaultValue='' placeholder='Add ingredient'/>
+                <br/>
+                <input id='submit-button' type='button' value='Submit' onClick={() => addIngredient(document.getElementById('name').value)}/>
+                <div id='ingredient-list'>
+                    {ingredients.map((ingredient) => {
+                        return (<div key={ingredient.id} 
+                                className='ingredient-container'>
+                                <div className='ingredient-name'>{ingredient.name}</div>
+                        </div>
+                        )
+                    })}
+                </div>
             </div>
             <div id='recipe-results'>!recipe results</div>
         </div>
