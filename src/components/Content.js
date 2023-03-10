@@ -6,7 +6,7 @@ import '../styles/Content.css'
 
 const Content = () => {
     
-    
+    let orderNum = 3
     const [ingredients, setIngredients] = useState ([
         {name: 'apple', id:uniqid()},
         {name: 'orange', id:uniqid()},
@@ -23,7 +23,7 @@ const Content = () => {
             urlIngredientArray += ingredients[i].name + ',+'
         }
 
-        let newUrl = 'https:api.spoonacular.com/recipes/findByIngredients?apiKey=5a9eaad9b6f54ec5adca1041255d83f2&ingredients=' + urlIngredientArray + '&number=10' ; 
+        let newUrl = 'https:api.spoonacular.com/recipes/findByIngredients?apiKey=5a9eaad9b6f54ec5adca1041255d83f2&ingredients=' + urlIngredientArray.toLowerCase() + '&number=10' ; 
         
         // fetch(newUrl) 
     
@@ -39,17 +39,35 @@ const Content = () => {
         console.log(newUrl)
     }
 
+    const capitalize = (string) => {
+        let lowercaseResult = string.toLowerCase();
+        let capitalizedResult = lowercaseResult.charAt(0).toUpperCase() + lowercaseResult.slice(1);
+        return capitalizedResult
+    }
+
     const addIngredient = (ingredient) => {
         let ingredientObject = {}
-
         
-        ingredientObject.name = ingredient
+        
+        ingredientObject.name = capitalize(ingredient)
         ingredientObject.id = uniqid()
+        ingredientObject.orderNum = orderNum + 1
         ingredients.push(ingredientObject)
         setIngredients([...ingredients])
         document.getElementById('name').value = ''
         console.log(ingredients)
     }
+
+
+    const deleteIngredient = (ingredient) => {
+        
+        let index = ingredients.indexOf(orderNum)
+
+        let x = ingredients.splice(index, orderNum)
+
+        setIngredients([...ingredients])
+    }
+
 
     combineIngredients(ingredients)
     return (
@@ -61,7 +79,8 @@ const Content = () => {
                 <div id='ingredient-list'>
                     {ingredients.map((ingredient) => {
                         return (<div key={ingredient.id} 
-                                className='ingredient-container'>
+                                className='ingredient-container'
+                                onClick={() => deleteIngredient(ingredient)}>
                                 <div className='ingredient-name'>{ingredient.name}</div>
                         </div>
                         )
