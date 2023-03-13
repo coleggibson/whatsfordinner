@@ -60,6 +60,7 @@ const Content = () => {
 
         .then(function(result) {
             getRecipeUrl(result)
+            // pullMissingIngredients(result)
             setRecipes([...result])
             
             console.log(result)
@@ -112,9 +113,11 @@ const Content = () => {
         console.log(recipes)
     }
 
-    const pullMissingIngredients = () => {
-
-    }
+    // const pullMissingIngredients = (array) => {
+    //     for (let i = 0; i < array.length; i++){
+    //     console.log(array[i][6])
+    //     }
+    // }
 
     return (
         <div id="content-container">
@@ -152,7 +155,6 @@ const Content = () => {
                         </div>
                         )
                     })}
-                
             </div>
         </div>
     )
