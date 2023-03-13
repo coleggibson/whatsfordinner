@@ -7,7 +7,7 @@ import '../styles/Content.css'
 //add random recipe
 const Content = () => {
     
-    let orderNum = 1
+    let orderNum
     const [ingredients, setIngredients] = useState ([
     ]);
 
@@ -33,11 +33,11 @@ const Content = () => {
         
         if ( value.trim() !== ''){
         ingredientObject.id = uniqid()
-        ingredientObject.orderNum = orderNum + 1
         ingredients.push(ingredientObject)
         setIngredients([...ingredients])
         combineIngredients(ingredients)
         document.getElementById('name').value = ''
+        
         }
          
         console.log(ingredients)
@@ -61,6 +61,7 @@ const Content = () => {
         .then(function(result) {
             getRecipeUrl(result)
             setRecipes([...result])
+            
             console.log(result)
         });
         
@@ -88,14 +89,16 @@ const Content = () => {
     }
 
     const deleteIngredient = (ingredient) => {
-        
-        let index = ingredients.indexOf(orderNum)
+        let divId = document.getElementById(ingredient.id).id
 
-        let x = ingredients.splice(index, orderNum)
+        let indexOfIngredient = ingredients.findIndex(ingredient => {
+            return ingredient.id === divId
+        })
+
+        ingredients.splice(indexOfIngredient, 1)
         
-        setIngredients([ingredients])
-        setRecipes([...recipes])
-        
+        setIngredients([...ingredients])
+        setShownRecipes([...recipes])
     }
 
     const deleteAllIngredients = (ingredients) => {
@@ -109,12 +112,15 @@ const Content = () => {
         console.log(recipes)
     }
 
+    const pullMissingIngredients = () => {
+
+    }
+
     return (
         <div id="content-container">
             <div id='search-content'>
                 <div id='search-items'>
                     <input id='name' type='text' defaultValue='' placeholder='Type your ingredient'/>
-                    {/* <br/> */}
                     <div id='button-container'>
                         <input id='ingredient-button' type='button' value='Add' onClick={() => addIngredient(document.getElementById('name').value)}/>
                         <input id='ingredient-button' type='button' value='Delete All' onClick={() => deleteAllIngredients(ingredients)}/>
@@ -124,6 +130,7 @@ const Content = () => {
                 <div id='ingredient-list'>
                     {ingredients.map((ingredient) => {
                         return (<div key={ingredient.id} 
+                                id={ingredient.id}
                                 className='ingredient-container'
                                 onClick={() => deleteIngredient(ingredient)}>
                                 <div className='ingredient-name'>{ingredient.name}</div>
@@ -132,7 +139,7 @@ const Content = () => {
                     })}
                 </div>
             </div>
-            
+            <div id='results-title'>Top 10 Results</div>
             <div id='recipe-results'>
                     {shownRecipes.map((recipe) => {
                         return (<div key={recipe.id} 

@@ -12,6 +12,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-image: linear-gradient(to right, rgb(147, 193, 204),rgb(236, 216, 128))
+
 }
 
 #button-container {
@@ -88,12 +90,9 @@
 #recipe-results {
     width:100%;
     padding: 0px;
-    background-image: linear-gradient(to right, rgb(147, 193, 204),rgb(236, 216, 128))
 }
 
-#results-title {
-    background-image: linear-gradient(to right, rgb(147, 193, 204),rgb(236, 216, 128))
-}
+
 
 .recipe-container {
     display: flex;
