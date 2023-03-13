@@ -3,14 +3,27 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 400px;
+    height: fit-content;
     width: 100%;
     background-image: linear-gradient(to right, rgb(147, 193, 204),rgb(236, 216, 128))
 }
 
+#search-items {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(to right, rgb(147, 193, 204),rgb(236, 216, 128))
+
+}
+
+#button-container {
+    display: flex;
+    flex-direction: column;
+}
+
 #name {
     margin: 10px;
-    height: 60px;
+    height: 80px;
     width: 400px;
     font-size: large;
     font-weight: bold;
@@ -18,11 +31,35 @@
     border-radius: 20px;
 }
 
+#ingredient-button {
+    width: 90px;
+    height: 40px;
+    cursor: pointer;
+    border: 1px;
+    border-style: solid;
+    background-color: aliceblue;
+    margin: 10px;
+    border-radius: 50px;
+    
+}
+
 #submit-button {
     width: 150px;
     height: 30px;
     cursor: pointer;
+    border: 1px;
+    border-style: solid;
+    background-color: aliceblue;
+    margin: 10px;
+    border-radius: 5px;
+    
 }
+#submit-button:hover {
+    transition: 2s;
+    background-color: rgb(211, 206, 206);
+    border-radius: 100px;
+}  
+
 
 .ingredient-name{
     border: 2px;
@@ -33,6 +70,13 @@
     font-weight: 600;
     border-radius: 60px;
     background-color:lemonchiffon;
+}
+
+.ingredient-name:hover{
+    cursor: pointer;
+    transition: .5s;
+    filter:blur(1px);
+    filter: opacity(50%);
 }
 
 #ingredient-list {
@@ -48,20 +92,19 @@
     padding: 0px;
 }
 
-#results-title {
-    background-image: linear-gradient(to right, rgb(147, 193, 204),rgb(236, 216, 128))
-}
+
 
 .recipe-container {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     justify-content: center;
     justify-content: space-between;
     padding: 10px;
+    border-bottom: 2px;
     border-style: solid;
     border-color: black;
-    border-width: 1px;
-    height: 100px;
+    
+    height: auto;
     width: auto;
 }
  .recipe-content-container {
@@ -69,4 +112,10 @@
     flex-direction: column;
     justify-content: center;
     justify-content: space-between;
+ }
+
+ .recipe-image{
+    height: 100px;
+    border-radius: 10px;
+    margin-right: 10px;
  }
