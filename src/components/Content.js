@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import uniqid from "uniqid";
 import '../index.css'
 import '../styles/Content.css'
@@ -7,7 +7,7 @@ import '../styles/Content.css'
 //add random recipe
 const Content = () => {
     
-    let orderNum = 2
+    let orderNum = 1
     const [ingredients, setIngredients] = useState ([
     ]);
 
@@ -16,7 +16,9 @@ const Content = () => {
         {title: 'Carrot soufle for the big fam on board',link:'www.carrot.com', id:125},
     ]);
 
-    
+    const [shownRecipes, setShownRecipes] = useState([
+
+    ]);
 
     const capitalize = (string) => {
         let lowercaseResult = string.toLowerCase();
@@ -37,6 +39,8 @@ const Content = () => {
         combineIngredients(ingredients)
         document.getElementById('name').value = ''
         }
+         
+        console.log(ingredients)
     }
 
     const combineIngredients = (ingredients) => {
@@ -53,28 +57,34 @@ const Content = () => {
             return result.json();
         })
         
-        .then(function(result) {
-            setRecipes([...result])
-        });
 
+        .then(function(result) {
+            getRecipeUrl(result)
+            setRecipes([...result])
+            console.log(result)
+        });
         
-        console.log(recipes)
     }
+
     
-    const getRecipeUrl = (recipe) => {
-        let recipeId = recipe.id
+    const getRecipeUrl = (array) => {
+        for (let i = 0; i < array.length; i++){
+        
+        let recipeId = array[i].id
         let recipeUrl = 'https:api.spoonacular.com/recipes/' + recipeId + '/information?apiKey=5a9eaad9b6f54ec5adca1041255d83f2'; 
         
         fetch(recipeUrl) 
     
-        .then(function(result) {
-            return result.json();
+        .then(function(response) {
+            return response.json();
         })
         
-        .then(function(result) {
-            recipe.link = result.sourceUrl
-            setRecipes([...recipes])
+        .then(function(response) {
+            array[i].link = response.sourceUrl
+            // setRecipes({...response})
         });
+        
+    }
     }
 
     const deleteIngredient = (ingredient) => {
@@ -82,23 +92,35 @@ const Content = () => {
         let index = ingredients.indexOf(orderNum)
 
         let x = ingredients.splice(index, orderNum)
-
-        setIngredients([...ingredients])
+        
+        setIngredients([ingredients])
+        setRecipes([...recipes])
+        
     }
 
     const deleteAllIngredients = (ingredients) => {
         setIngredients([])
+        setRecipes([])
+        setShownRecipes([])
+    }
+
+    const searchRecipes = (recipes) => {
+        setShownRecipes([...recipes])
+        console.log(recipes)
     }
 
     return (
         <div id="content-container">
             <div id='search-content'>
-                <input id='name' type='text' defaultValue='' placeholder='Search for ingredient'/>
-                <br/>
-                <div id='button-container'>
-                <input id='submit-button' type='button' value='Add' onClick={() => addIngredient(document.getElementById('name').value)}/>
-                <input id='submit-button' type='button' value='Delete All' onClick={() => deleteAllIngredients(ingredients)}/>
+                <div id='search-items'>
+                    <input id='name' type='text' defaultValue='' placeholder='Type your ingredient'/>
+                    {/* <br/> */}
+                    <div id='button-container'>
+                        <input id='ingredient-button' type='button' value='Add' onClick={() => addIngredient(document.getElementById('name').value)}/>
+                        <input id='ingredient-button' type='button' value='Delete All' onClick={() => deleteAllIngredients(ingredients)}/>
+                    </div>
                 </div>
+                <input id='submit-button' type='button' value='Search Recipes' onClick={() => searchRecipes(recipes)}/>
                 <div id='ingredient-list'>
                     {ingredients.map((ingredient) => {
                         return (<div key={ingredient.id} 
@@ -109,14 +131,13 @@ const Content = () => {
                         )
                     })}
                 </div>
-                
             </div>
             
             <div id='recipe-results'>
-                    {recipes.map((recipe) => {
+                    {shownRecipes.map((recipe) => {
                         return (<div key={recipe.id} 
                                 className='recipe-container'>
-                                <div className='recipe-image'>img</div>
+                                <img className='recipe-image' src={recipe.image}></img>
                                 <div className='recipe-content-container'>
                                     <div className='recipe-name'>{recipe.title}</div>
                                     <div className ='recipe-url'>Link to recipe: {recipe.link}</div>
