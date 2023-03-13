@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/recipeme/static/css/main.05c9c34b.css",
+    "main.js": "/recipeme/static/js/main.48c85c56.js",
+    "index.html": "/recipeme/index.html",
+    "main.05c9c34b.css.map": "/recipeme/static/css/main.05c9c34b.css.map",
+    "main.48c85c56.js.map": "/recipeme/static/js/main.48c85c56.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.05c9c34b.css",
+    "static/js/main.48c85c56.js"
+  ]
+}
